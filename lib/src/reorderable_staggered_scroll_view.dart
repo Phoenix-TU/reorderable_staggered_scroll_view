@@ -138,11 +138,11 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
 
   /// A callback when an item is accepted during a drag operation.
   final void Function(ReorderableStaggeredScrollViewListItem?,
-      ReorderableStaggeredScrollViewListItem, bool)? onAccept;
+      ReorderableStaggeredScrollViewListItem, bool, List<Key> list)? onAccept;
 
   /// A callback to check if an item will be accepted during a drag operation.
   final bool Function(ReorderableStaggeredScrollViewListItem?,
-      ReorderableStaggeredScrollViewListItem, bool)? onWillAccept;
+      ReorderableStaggeredScrollViewListItem, bool,List<Key> list)? onWillAccept;
 
   /// A callback when an item leaves the target area during a drag operation.
   final void Function(ReorderableStaggeredScrollViewListItem?,
@@ -293,10 +293,10 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     Widget Function(ReorderableStaggeredScrollViewGridItem, Widget, Size)?
         buildFeedback,
     void Function(ReorderableStaggeredScrollViewGridItem?,
-            ReorderableStaggeredScrollViewGridItem, bool)?
+            ReorderableStaggeredScrollViewGridItem, bool, List<Key> list)?
         onAccept,
     bool Function(ReorderableStaggeredScrollViewGridItem?,
-            ReorderableStaggeredScrollViewGridItem, bool)?
+            ReorderableStaggeredScrollViewGridItem, bool, List<Key> list)?
         onWillAccept,
     void Function(ReorderableStaggeredScrollViewGridItem?,
             ReorderableStaggeredScrollViewGridItem, bool)?
@@ -333,11 +333,11 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
             ? null
             : (ReorderableStaggeredScrollViewListItem? item1,
                     ReorderableStaggeredScrollViewListItem? item2,
-                    bool value) =>
+                    bool value, List<Key> list) =>
                 onAccept(
                   item1 as ReorderableStaggeredScrollViewGridItem?,
                   item2 as ReorderableStaggeredScrollViewGridItem,
-                  value,
+                  value, list
                 )),
         onLeave = (onLeave == null
             ? null
@@ -353,11 +353,11 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
             ? null
             : (ReorderableStaggeredScrollViewListItem? item1,
                     ReorderableStaggeredScrollViewListItem? item2,
-                    bool value) =>
+                    bool value,List<Key> list) =>
                 onWillAccept(
                   item1 as ReorderableStaggeredScrollViewGridItem?,
                   item2 as ReorderableStaggeredScrollViewGridItem,
-                  value,
+                  value, list,
                 )),
         onMove = (onMove == null
             ? null
