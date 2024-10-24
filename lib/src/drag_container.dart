@@ -61,8 +61,8 @@ class DragContainer<T extends ReorderableStaggeredScrollViewListItem>
   final Widget Function(T data, Widget child, Size size)? buildFeedback;
   final bool isLongPressDraggable;
   final Axis? axis;
-  final void Function(T? moveData, T data, bool isFront)? onAccept;
-  final bool Function(T? moveData, T data, bool isFront)? onWillAccept;
+  final void Function(T? moveData, T data, bool isFront, List<Key> listUpdated)? onAccept;
+  final bool Function(T? moveData, T data, bool isFront, List<Key> listUpdated)? onWillAccept;
   final void Function(T? moveData, T data, bool isFront)? onLeave;
   final void Function(T data, DragTargetDetails<T> details, bool isFront)?
       onMove;
@@ -186,7 +186,7 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
       _timer = Timer(const Duration(milliseconds: 200), () {
         if (!DragNotification.isScroll) {
           if (widget.onWillAccept != null) {
-            widget.onWillAccept?.call(moveData, data, isFront);
+            widget.onWillAccept?.call(moveData, data, isFront, widget.dataList.map((e)=>e.key).toList());
           } else if (moveData != null) {
             setState(() {
               final int index = widget.dataList.indexOf(data);
@@ -262,7 +262,7 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
                         onAcceptWithDetails: widget.onAccept == null
                             ? null
                             : (DragTargetDetails<T> details) =>
-                                widget.onAccept?.call(details.data, data, true),
+                                widget.onAccept?.call(details.data, data, true,widget.dataList.map((e)=>e.key).toList()),
                         onLeave: widget.onLeave == null
                             ? null
                             : (T? moveData) =>
@@ -288,7 +288,7 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
                         onAcceptWithDetails: widget.onAccept == null
                             ? null
                             : (DragTargetDetails<T> details) => widget.onAccept
-                                ?.call(details.data, data, false),
+                                ?.call(details.data, data, false,widget.dataList.map((e)=>e.key).toList()),
                         onLeave: widget.onLeave == null
                             ? null
                             : (T? moveData) =>

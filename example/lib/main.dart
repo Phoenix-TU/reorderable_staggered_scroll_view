@@ -151,8 +151,9 @@ class _HomePageState extends State<HomePage> {
               physics: const BouncingScrollPhysics(),
               crossAxisCount: 4,
               isLongPressDraggable: false,
-              onAccept: (item1, item2, value) {
+              onAccept: (item1, item2, value, list) {
                 print('item1 $item1 item2 $item2 value $value');
+                print(list.map((e)=>e.toString()));
               },
               onDragEnd: (details, item) {
                 print('onDragEnd: $details ${item.key}');
